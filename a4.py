@@ -1,6 +1,4 @@
 # a4.py
-# YOUR NAME(S) AND NETID(S) HERE
-# DATE COMPLETED HERE
 """ Functions for Assignment A4"""
 
 
@@ -25,7 +23,6 @@ def build_word_list(filename):
         real_line = line.strip()
         word_list.append(real_line)
     file.close()
-    print "word_list", word_list
     return word_list
 
 
@@ -184,15 +181,10 @@ def autocomplete(prefix, pmap):
         final_words = []
         for item in pmap[prefix]:
             new_prefix = prefix + item
-#            print "new prefix", new_prefix
             if item != '':
                 final_words += autocomplete(new_prefix, pmap)
-#                print "finalwords now", final_words
-#                print "prefix", new_prefix  
             else:
                 final_words.append(new_prefix)
-#                print "finalwords with space", final_words
-#    print "final words is finally", final_words
     return final_words     
 
 
@@ -257,15 +249,12 @@ def scrabble_helper(prefix,rack,size,pmap):
         return []
     else:
         for letter in rack:            
-#           print "letter is", letter
             new_rack = rack.replace(letter, '')
             new_prefix = prefix + letter
-#           print "new prefix is", new_prefix
             if size == 1:
                 if new_prefix in pmap:
                     if '' in pmap[new_prefix]:
                         words.append(new_prefix)
-#                        print "words list is", words
             else:
                 words += scrabble_helper(new_prefix, new_rack, size - 1, pmap)
     return words
@@ -336,17 +325,12 @@ def match_helper(prefix,template,pmap):
                 elif '' in pmap[new_prefix]:
                     if len(new_template) == 0:
                         final_matches += new_prefix
-                        print "final matches is now", final_matches
                 else:
                     final_matches += match_helper(new_prefix, new_template, pmap)
             else:
                 prefix_options = pmap[prefix]
                 options = [prefix + option for option in pmap[prefix]]
-                print "options are", options
                 new_template = template.replace(letter, '')
-                print "template is now", new_template
                 for item in options:
-                    print "final matches before", final_matches
                     final_matches += match_helper(item, new_template, pmap)
-        print "final matches", final_matches
         return final_matches
